@@ -70,17 +70,25 @@ class EpisodeBuilder:
 # scheme. Capitalization of the 's' and 'e' does not matter.
 #
 # Example:
-#   Revolutionary Girl Utena (1997) - s01e03 - On The Night Of The Ball.mkv -> season_number = 01, episode_number = 03
-#   Revolutionary Girl Utena (1997) - S01E04 - The Sunlit Garden (Prelude).mkv -> season_number = 01, episode_number = 04
+#   Revolutionary Girl Utena (1997) - s01e03 - On The Night Of The Ball.mkv
+#   # season_number = 01, episode_number = 03
+#
+#   Revolutionary Girl Utena (1997) - S01E04 - The Sunlit Garden (Prelude).mkv
+#   # season_number = 01, episode_number = 04
 SEASON_AND_EPISODE_PATTERN: re.Pattern = re.compile(r"\-\s+[sS](?P<season_number>\d+)[eE](?P<episode_number>\d+)")
 
 # Handles episode files with an automatically generated number at the end which typically
 # results from ripping DVDs.
 #
 # Example:
-#   UTENA_SET3_BD1_t00.mkv -> local_number = 00
-#   UTENA_SET3_BD1_t01.mkv -> local_number = 01
-#   UTENA_SET3_BD1_t02.mkv -> local_number = 02
+#   UTENA_SET3_BD1_t00.mkv
+#   # local_number = 00
+#
+#   UTENA_SET3_BD1_t01.mkv
+#   # local_number = 01
+#
+#   UTENA_SET3_BD1_t02.mkv
+#   # local_number = 02
 LOCALLY_NUMBERED: re.Pattern = re.compile(r"(?P<local_number>\d+)$")
 
 
