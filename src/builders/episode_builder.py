@@ -3,7 +3,7 @@
 from pathlib import Path
 import re
 from data_objects.episode import Episode
-from data_objects.protocols.series_context_protocol import SeriesContextProtocol
+from ..protocols import SeriesContextProtocol
 
 
 VALID_EXTENSIONS: frozenset = frozenset({
@@ -47,10 +47,6 @@ class EpisodeBuilder:
         self._episode_number = episode_number
         return self
 
-    def set_local_number(self, local_number: int) -> "EpisodeBuilder":
-        self._local_number = local_number
-        return self
-
     def build(self) -> Episode:
         return Episode(
             series_context=self._series_context,
@@ -59,7 +55,6 @@ class EpisodeBuilder:
             episode_number=self._episode_number,
             local_number=self._local_number,
         )
-
 
     # Private Methods
 

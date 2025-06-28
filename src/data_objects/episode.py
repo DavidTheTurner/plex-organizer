@@ -1,8 +1,6 @@
 
 from pathlib import Path
-import re
-
-from .protocols.series_context_protocol import SeriesContextProtocol
+from ..protocols import SeriesContextProtocol
 
 
 class Episode:
@@ -23,7 +21,7 @@ class Episode:
         "_local_number",
     )
 
-    #TODO: add extra meta data like edition, episode titles, etc
+    # TODO: add extra meta data like edition, episode titles, etc
 
     def __init__(
         self,
