@@ -70,8 +70,8 @@ class EpisodeBuilder:
 # scheme. Capitalization of the 's' and 'e' does not matter.
 #
 # Example:
-#   Revolutionary Girl Utena (1997) - s01e03 - On The Night Of The Ball -> season_number = 01, episode_number = 03
-#   Revolutionary Girl Utena (1997) - S01E04 - The Sunlit Garden (Prelude) -> season_number = 01, episode_number = 04
+#   Revolutionary Girl Utena (1997) - s01e03 - On The Night Of The Ball.mkv -> season_number = 01, episode_number = 03
+#   Revolutionary Girl Utena (1997) - S01E04 - The Sunlit Garden (Prelude).mkv -> season_number = 01, episode_number = 04
 SEASON_AND_EPISODE_PATTERN: re.Pattern = re.compile(r"\-\s+[sS](?P<season_number>\d+)[eE](?P<episode_number>\d+)")
 
 # Handles episode files with an automatically generated number at the end which typically
