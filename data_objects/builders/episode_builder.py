@@ -12,6 +12,9 @@ VALID_EXTENSIONS: frozenset = frozenset({
 
 
 class EpisodeBuilder:
+    """
+    Class for simplifying the process of creating episode objects
+    """
     __slots__ = (
         "_series_context",
         "_path",
@@ -69,10 +72,11 @@ class EpisodeBuilder:
 
 
 # Handles extracting the season number and episode number from the typical plex episode naming
-# scheme.
+# scheme. Capitalization of the 's' and 'e' does not matter.
 #
 # Example:
 #   Revolutionary Girl Utena (1997) - s01e03 - On The Night Of The Ball -> season_number = 01, episode_number = 03
+#   Revolutionary Girl Utena (1997) - S01E04 - The Sunlit Garden (Prelude) -> season_number = 01, episode_number = 04
 SEASON_AND_EPISODE_PATTERN: re.Pattern = re.compile(r"\-\s+[sS](?P<season_number>\d+)[eE](?P<episode_number>\d+)")
 
 # Handles episode files with an automatically generated number at the end which typically
@@ -86,6 +90,9 @@ LOCALLY_NUMBERED: re.Pattern = re.compile(r"(?P<local_number>\d+)$")
 
 
 def create_episode(series_context: SeriesContextProtocol, episode_path: Path) -> Episode:
+    """
+    Factory that builds appropriate episode objects based on name of episode
+    """
 
     episode_name: str = episode_path.name
 
