@@ -2,7 +2,7 @@
 
 from pathlib import Path
 import re
-from data_objects.episode import Episode
+from ..data_objects import Episode
 from ..protocols import SeriesContextProtocol
 
 
