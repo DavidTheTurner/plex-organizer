@@ -1,1 +1,2 @@
-from episode import *
+from .episode import *
+from .extractor import *

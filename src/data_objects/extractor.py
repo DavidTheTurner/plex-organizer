@@ -38,7 +38,7 @@ class Extractor(ExtractorProtocol):
             in self._extraction_directories
         ])
 
-        extraction_number: int = 1
+        production_number: int = 1
         for video_file in extracted_content:
             if video_file.is_dir():
                 logger.warning(
@@ -46,8 +46,8 @@ class Extractor(ExtractorProtocol):
                 )
                 continue
 
-            yield video_file, extraction_number
-            extraction_number += 1
+            yield video_file, production_number
+            production_number += 1
 
         return
 
