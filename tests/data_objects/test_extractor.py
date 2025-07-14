@@ -10,13 +10,11 @@ def dummy_dirs(tmp_path) -> list[Path]:
 
     dummy1: Path = tmp_path / "JoJo's Bizzare Adventure - 1"
     dummy1.mkdir()
-
     for i in range(5):
         (dummy1 / f"Jojo - {i}.mkv").touch()
 
     dummy2: Path = tmp_path / "JoJo's Bizzare Adventure - 2"
     dummy2.mkdir()
-
     for i in range(3):
         (dummy2 / f"Jojo - {i}.mkv").touch()
 
