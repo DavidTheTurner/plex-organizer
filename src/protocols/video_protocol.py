@@ -8,11 +8,11 @@ from typing import Protocol
 class VideoProtocol(Protocol):
 
     @abstractmethod
-    @property
+    # @property
     def order_number(self) -> int:
         pass
 
     @abstractmethod
-    @property
+    # @property
     def video_path(self) -> Path:
         pass
