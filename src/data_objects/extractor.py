@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Any, Generator
 
 from ..utils import TRAILING_NUMBER, sort_by_trailing_number
-from ..protocols import ExtractorProtocol
 
 logger = logging.getLogger(__name__)
 
@@ -17,29 +16,31 @@ class ExtractedVideo:
     extraction_number: int
 
 
-class Extractor(ExtractorProtocol):
+class Extractor():
     __slots__ = (
         "_extraction_directories",
     )
 
     def __init__(
         self,
-        *,
         extraction_paths: list[Path],
     ):
         self._validate_extraction_paths(extraction_paths)
         self._extraction_directories: list[Path] = sort_by_trailing_number(extraction_paths)
 
     def get_all_videos(self) -> Generator[tuple[Path, int], Any, None]:
+        """
+        Looks through list of directories and pulls out all files. Sub-directories are ignored.
+        """
 
-        extracted_content: list[Path] = chain.from_iterable([
+        content_to_extract: list[Path] = chain.from_iterable([
             sort_by_trailing_number(dir.iterdir())
             for dir
             in self._extraction_directories
         ])
 
         production_number: int = 1
-        for video_file in extracted_content:
+        for video_file in content_to_extract:
             if video_file.is_dir():
                 logger.warning(
                     f"File '{video_file.name}' in '{str(video_file.parent)}' is a directory and will be ignored."
