@@ -1,7 +1,18 @@
+from dataclasses import dataclass
 from pathlib import Path
 
 from ..data_objects import Extractor
-from ..protocols import SeriesContextProtocol, SeasonProtocol
+from ..protocols import SeriesContextProtocol
+
+
+@dataclass(slots=True)
+class Season:
+    season_dir: Path
+    episodes: dict[int, Path]
+
+    def __init__(self, season_number):
+        self.season_dir = f"Season {season_number:02d}"
+        self.episodes = {}
 
 
 class Series(SeriesContextProtocol):
@@ -16,9 +27,9 @@ class Series(SeriesContextProtocol):
         "_production_year",
         # Dictionary that maps a production number range
         # to a season
-        "_season_map",
-        # Seasons within the series
-        "_season_dirs",
+        "_episode_to_season_map",
+        # Dictionary of seasons within a series
+        "_seasons",
         # Sub-directories that contain episodes
         "_episode_dirs",
         # The unique identifier for the series on
@@ -32,15 +43,15 @@ class Series(SeriesContextProtocol):
         series_dir: Path,
         title: str,
         production_year: int,
-        tvdb_id: int | None,
-        season_map: dict[tuple[int, int], int],
-        season_list: list[SeasonProtocol],
+        episode_to_season_map: dict[tuple[int, int], int],
+        seasons: dict[int, Season],
+        tvdb_id: int | None = None,
     ):
         self._series_dir: Path = series_dir
         self._title: str = title
         self._production_year: int = production_year
-        self._season_map: dict[int, tuple[int, int]] = season_map
-        self._season_list: list[SeasonProtocol] = season_list
+        self._episode_to_season_map: dict[int, tuple[int, int]] = episode_to_season_map
+        self._seasons: dict[int, Season] = seasons
         self._tvdb_id: int | None = tvdb_id
 
     # Property Methods
@@ -70,10 +81,22 @@ class Series(SeriesContextProtocol):
         season_number: int,
         episode_number: int,
     ) -> None:
-        pass
+
+        desired_season: Season | None = self._seasons.get(season_number)
+        if desired_season is None:
+            new_season: Season = Season(season_number)
+
+            self._seasons[season_number] = new_season
+            desired_season = new_season
+
+        desired_season.episodes[episode_number] = episode_path
 
     def get_season_and_episode_numbers(self, production_number: int) -> tuple[int, int]:
-        for season_number, episode_range in self._season_map.items():
+        """
+        Iterates through the season map to find the corresponding season and calculates the episode number
+        within the season.
+        """
+        for season_number, episode_range in self._episode_to_season_map.items():
             if episode_range[0] <= production_number <= episode_range[1]:
                 episode_number: int = production_number - episode_range[0] + 1
                 return season_number, episode_number
