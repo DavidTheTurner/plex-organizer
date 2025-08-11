@@ -30,11 +30,6 @@ class Series(SeriesContextProtocol):
         "_episode_to_season_map",
         # Dictionary of seasons within a series
         "_seasons",
-        # Sub-directories that contain episodes
-        "_episode_dirs",
-        # The unique identifier for the series on
-        # TVDB
-        "_tvdb_id",
     )
 
     def __init__(
@@ -45,14 +40,12 @@ class Series(SeriesContextProtocol):
         production_year: int,
         episode_to_season_map: dict[tuple[int, int], int],
         seasons: dict[int, Season],
-        tvdb_id: int | None = None,
     ):
         self._series_dir: Path = series_dir
         self._title: str = title
         self._production_year: int = production_year
         self._episode_to_season_map: dict[int, tuple[int, int]] = episode_to_season_map
         self._seasons: dict[int, Season] = seasons
-        self._tvdb_id: int | None = tvdb_id
 
     # Property Methods
 
