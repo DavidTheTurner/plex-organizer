@@ -24,9 +24,7 @@ def dummy_dirs(tmp_path) -> list[Path]:
 class TestGetAllVideos:
 
     def test_it_gets_videos(self, dummy_dirs: list[Path]):
-        extractor: Extractor = Extractor(
-            extraction_paths=dummy_dirs
-        )
+        extractor: Extractor = Extractor(dummy_dirs)
 
         results = list(extractor.get_all_videos())
         print(results)
