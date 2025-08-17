@@ -35,15 +35,15 @@ class Series(SeriesContextProtocol):
     def __init__(
         self,
         *,
-        series_dir: Path,
+        output_dir: Path,
         title: str,
         production_year: int,
         episode_to_season_map: dict[tuple[int, int], int],
         seasons: dict[int, Season],
     ):
-        self._series_dir: Path = series_dir
         self._title: str = title
         self._production_year: int = production_year
+        self._series_dir: Path = output_dir / self.plex_series_name
         self._episode_to_season_map: dict[int, tuple[int, int]] = episode_to_season_map
         self._seasons: dict[int, Season] = seasons
 
@@ -56,6 +56,14 @@ class Series(SeriesContextProtocol):
     @property
     def production_year(self) -> int:
         return self._production_year
+
+    @property
+    def plex_series_name(self) -> str:
+        return f"{self._title} ({self._production_year})"
+
+    @property
+    def series_dir(self) -> Path:
+        return self._series_dir
 
     # Public Methods
 
