@@ -10,9 +10,9 @@ class Season:
     season_dir: Path
     episodes: dict[int, Path]
 
-    def __init__(self, season_number):
+    def __init__(self, season_number, episodes: dict[int, Path] | None = None):
         self.season_dir = f"Season {season_number:02d}"
-        self.episodes = {}
+        self.episodes = episodes if episodes is not None else {}
 
 
 class Series(SeriesContextProtocol):
